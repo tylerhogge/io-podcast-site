@@ -13,10 +13,12 @@ export default async function VideosPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
       <div className="mb-10">
-        <p className="text-accent uppercase tracking-widest text-xs font-semibold">Watch on YouTube</p>
+        <p className="text-accent uppercase tracking-widest text-xs font-semibold">
+          {videos.length > 0 ? `${videos.length} videos · Watch on YouTube` : 'Watch on YouTube'}
+        </p>
         <h1 className="mt-3 text-4xl sm:text-5xl font-bold tracking-tight text-ink-50">Videos</h1>
         <p className="mt-3 text-ink-300 max-w-2xl">
-          Full conversations and clips from the show.{' '}
+          Full conversations, clips, and shorts from the show.{' '}
           <a href="https://www.youtube.com/@IO-Podcast" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
             Subscribe on YouTube →
           </a>

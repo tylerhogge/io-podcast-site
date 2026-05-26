@@ -54,6 +54,14 @@ export default async function Home() {
                 >
                   Subscribe on Spotify
                 </a>
+                <a
+                  href="https://www.youtube.com/@IO-Podcast?sub_confirmation=1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-5 py-3 rounded-full border border-ink-600 text-ink-100 hover:border-accent hover:text-accent transition-colors"
+                >
+                  Subscribe on YouTube
+                </a>
               </div>
             </div>
 
