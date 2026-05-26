@@ -1,13 +1,17 @@
 import Link from 'next/link';
+import { fetchChannel } from '@/lib/rss';
+
+export const revalidate = 1800;
 
 export const metadata = {
   title: 'About',
   description: 'About The Investor + Operator (IO) Podcast and its hosts.',
 };
 
-const COVER = 'https://artwork.captivate.fm/4c919b97-7dba-4b4e-9752-ba2dcb35f2b7/vjokUePq8hkchxqh20VMQVnX.jpg';
+export default async function AboutPage() {
+  const channel = await fetchChannel();
+  const COVER = channel.image;
 
-export default function AboutPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16">
       <p className="text-accent uppercase tracking-widest text-xs font-semibold">About</p>

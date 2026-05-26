@@ -1,16 +1,15 @@
 import Link from 'next/link';
-import { fetchEpisodes } from '@/lib/rss';
+import { fetchEpisodes, fetchChannel } from '@/lib/rss';
 import EpisodeCard from '@/components/EpisodeCard';
 import ListenOn from '@/components/ListenOn';
 
 export const revalidate = 1800;
 
-const COVER = 'https://artwork.captivate.fm/4c919b97-7dba-4b4e-9752-ba2dcb35f2b7/vjokUePq8hkchxqh20VMQVnX.jpg';
-
 export default async function Home() {
-  const episodes = await fetchEpisodes();
+  const [episodes, channel] = await Promise.all([fetchEpisodes(), fetchChannel()]);
   const recent = episodes.slice(0, 6);
   const latest = episodes[0];
+  const COVER = channel.image;
 
   return (
     <>
