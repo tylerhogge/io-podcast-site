@@ -29,10 +29,7 @@ export default async function Home() {
               </h1>
               <p className="mt-6 text-lg text-ink-200 max-w-2xl leading-relaxed">
                 The most candid, applicable conversations about building companies with the world&apos;s best
-                operators and investors. Hosted by Tyler Hogge and Sterling Snow. Brought to you by{' '}
-                <a href="https://pelionvp.com/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
-                  Pelion Venture Partners
-                </a>.
+                operators and investors. Hosted by Tyler Hogge and Sterling Snow.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link

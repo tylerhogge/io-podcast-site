@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 const SITE_URL = 'https://www.investoroperator.io';
 const TITLE = 'The Investor + Operator (IO) Podcast';
 const DESCRIPTION =
-  'The Investor + Operator (IO) Podcast hosts the most candid, applicable conversations about building companies with the world’s best operators and investors. Brought to you by Pelion Venture Partners.';
+  'The Investor + Operator (IO) Podcast hosts the most candid, applicable conversations about building companies with the world’s best operators and investors.';
 const COVER = 'https://artwork.captivate.fm/4c919b97-7dba-4b4e-9752-ba2dcb35f2b7/vjokUePq8hkchxqh20VMQVnX.jpg';
 
 export const metadata: Metadata = {
@@ -28,7 +28,6 @@ export const metadata: Metadata = {
     images: [COVER],
     site: '@IO__podcast',
   },
-  icons: { icon: '/favicon.ico' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export const metadata = {
   title: 'About',
-  description: 'About The Investor + Operator (IO) Podcast, the hosts, and Pelion Venture Partners.',
+  description: 'About The Investor + Operator (IO) Podcast and its hosts.',
 };
 
 const COVER = 'https://artwork.captivate.fm/4c919b97-7dba-4b4e-9752-ba2dcb35f2b7/vjokUePq8hkchxqh20VMQVnX.jpg';
@@ -27,10 +27,8 @@ export default function AboutPage() {
             episodes drop monthly.
           </p>
           <p>
-            The show is brought to you by{' '}
-            <a href="https://pelionvp.com/" target="_blank" rel="noopener noreferrer">Pelion Venture Partners</a>,
-            an early-stage venture firm investing in software companies with conviction and
-            patience since 1986.
+            Hosted by Tyler Hogge and Sterling Snow — an investor and an operator pulling tactical
+            lessons out of every guest.
           </p>
         </div>
       </div>
@@ -40,11 +38,10 @@ export default function AboutPage() {
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="rounded-2xl border border-ink-700 bg-ink-800/40 p-6">
             <h3 className="text-xl font-semibold text-ink-50">Tyler Hogge</h3>
-            <p className="text-accent text-sm mt-1">Partner, Pelion Venture Partners</p>
+            <p className="text-accent text-sm mt-1">Investor</p>
             <p className="text-ink-300 text-sm mt-4 leading-relaxed">
-              Tyler is a partner at Pelion Venture Partners. He brings an investor&apos;s lens to
-              every conversation — what makes companies durable, what separates great founders,
-              and what investors are actually looking for.
+              Tyler brings an investor&apos;s lens to every conversation — what makes companies
+              durable, what separates great founders, and what investors are actually looking for.
             </p>
           </div>
           <div className="rounded-2xl border border-ink-700 bg-ink-800/40 p-6">
@@ -62,18 +59,13 @@ export default function AboutPage() {
       <section className="mt-16">
         <h2 className="text-2xl font-bold text-ink-50">Get in touch</h2>
         <p className="mt-3 text-ink-300">
-          Want to suggest a guest, share feedback, or work with Pelion? Reach out via{' '}
-          <a href="https://twitter.com/IO__podcast" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">X / Twitter</a>{' '}
-          or visit{' '}
-          <a href="https://pelionvp.com/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">pelionvp.com</a>.
+          Want to suggest a guest or share feedback? Reach out via{' '}
+          <a href="https://twitter.com/IO__podcast" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">X / Twitter</a>.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link href="/episodes" className="inline-flex items-center px-5 py-3 rounded-full bg-accent text-ink-900 font-semibold hover:bg-accent-light transition-colors">
             Listen to episodes
           </Link>
-          <a href="https://pelionvp.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-5 py-3 rounded-full border border-ink-600 text-ink-100 hover:border-accent hover:text-accent transition-colors">
-            Visit Pelion
-          </a>
         </div>
       </section>
     </div>

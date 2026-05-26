@@ -6,7 +6,6 @@ const NAV = [
   { href: '/episodes', label: 'Episodes' },
   { href: '/videos', label: 'Videos' },
   { href: '/about', label: 'About' },
-  { href: 'https://pelionvp.com/', label: 'Pelion', external: true },
   { href: '/reviews', label: 'Reviews' },
 ];
 
@@ -25,7 +24,6 @@ export default function Header() {
             <Link
               key={n.href}
               href={n.href}
-              {...(n.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               className="text-sm text-ink-200 hover:text-accent transition-colors"
             >
               {n.label}
@@ -59,8 +57,7 @@ export default function Header() {
               <Link
                 key={n.href}
                 href={n.href}
-                {...(n.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                className="text-base text-ink-100 hover:text-accent"
+                  className="text-base text-ink-100 hover:text-accent"
                 onClick={() => setOpen(false)}
               >
                 {n.label}

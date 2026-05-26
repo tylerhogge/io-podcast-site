@@ -18,7 +18,6 @@ export default function Footer() {
             <p className="text-ink-300 text-sm mt-3 leading-relaxed">
               The most candid, applicable conversations about building companies with the world&apos;s best operators and investors.
             </p>
-            <p className="text-ink-400 text-xs mt-3">Brought to you by Pelion Venture Partners</p>
           </div>
 
           <div>
@@ -28,7 +27,6 @@ export default function Footer() {
               <li><Link href="/videos" className="text-ink-300 hover:text-accent">Videos</Link></li>
               <li><Link href="/about" className="text-ink-300 hover:text-accent">About</Link></li>
               <li><Link href="/reviews" className="text-ink-300 hover:text-accent">Reviews</Link></li>
-              <li><a href="https://pelionvp.com/" target="_blank" rel="noopener noreferrer" className="text-ink-300 hover:text-accent">Pelion</a></li>
             </ul>
           </div>
 
