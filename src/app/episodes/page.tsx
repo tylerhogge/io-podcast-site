@@ -14,7 +14,8 @@ type SortKey = 'recent' | 'popular';
 function buildHref(season: string | undefined, sort: SortKey): string {
   const params = new URLSearchParams();
   if (season) params.set('season', season);
-  if (sort !== 'recent') params.set('sort', sort);
+  // Default sort is 'popular', so only add the param when it differs.
+  if (sort !== 'popular') params.set('sort', sort);
   const qs = params.toString();
   return qs ? `/episodes?${qs}` : '/episodes';
 }
@@ -26,7 +27,7 @@ export default async function EpisodesPage({
 }) {
   const all = await fetchRankedEpisodes();
   const season = searchParams.season;
-  const sort: SortKey = searchParams.sort === 'popular' ? 'popular' : 'recent';
+  const sort: SortKey = searchParams.sort === 'recent' ? 'recent' : 'popular';
 
   const seasonFiltered = season ? all.filter((e) => String(e.season) === season) : all;
   const sorted = sort === 'popular' ? sortByPopularity(seasonFiltered) : sortByRecency(seasonFiltered);
