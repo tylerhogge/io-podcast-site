@@ -99,7 +99,9 @@ async function fetchAndParseFeed(): Promise<FeedCache> {
     const pubDate = it.pubDate || '';
     const audioUrl = it.enclosure?.['@_url'] || '';
     const image = it['itunes:image']?.['@_href'] || '';
-    const season = it['itunes:season'] ? Number(it['itunes:season']) : null;
+    // Captivate left Season 1 episodes (1–16) without a season tag.
+    // Default any untagged episode to Season 1 so it groups correctly.
+    const season = it['itunes:season'] ? Number(it['itunes:season']) : 1;
     const episode = it['itunes:episode'] ? Number(it['itunes:episode']) : null;
     const duration = it['itunes:duration'] || '';
 
