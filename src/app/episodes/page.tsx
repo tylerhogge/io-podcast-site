@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { fetchRankedEpisodes, sortByPopularity, sortByRecency } from '@/lib/popularity';
-import EpisodeCard from '@/components/EpisodeCard';
+import EpisodeGrid from '@/components/EpisodeGrid';
 
 export const revalidate = 1800;
 
@@ -87,9 +87,7 @@ export default async function EpisodesPage({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {sorted.map((ep) => <EpisodeCard key={ep.id} episode={ep} />)}
-      </div>
+      <EpisodeGrid episodes={sorted} />
     </div>
   );
 }

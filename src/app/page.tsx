@@ -3,6 +3,7 @@ import { fetchEpisodes, fetchChannel } from '@/lib/rss';
 import { fetchRankedEpisodes, sortByPopularity } from '@/lib/popularity';
 import EpisodeCard from '@/components/EpisodeCard';
 import ListenOn from '@/components/ListenOn';
+import EmailSignup from '@/components/EmailSignup';
 
 export const revalidate = 1800;
 
@@ -32,8 +33,8 @@ export default async function Home() {
                 The Investor + Operator <span className="text-accent">(IO)</span> Podcast
               </h1>
               <p className="mt-6 text-lg text-ink-200 max-w-2xl leading-relaxed">
-                The most candid, applicable conversations about building companies with the world&apos;s best
-                operators and investors. Hosted by Tyler Hogge and Sterling Snow.
+                Real conversations with the world&apos;s best operators and investors — the kind founders
+                actually use. Hosted by Tyler Hogge and Sterling Snow.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-2 sm:gap-3">
                 <Link
@@ -134,6 +135,8 @@ export default async function Home() {
       </section>
 
       <ListenOn />
+
+      <EmailSignup />
 
       {/* Reviews teaser */}
       <section className="py-16">

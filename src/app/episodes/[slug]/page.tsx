@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { fetchEpisodes, getEpisodeBySlug } from '@/lib/rss';
+import { fetchEpisodes, getEpisodeBySlug, parseChapters, descriptionWithoutChapters } from '@/lib/rss';
+import EpisodePlayer from '@/components/EpisodePlayer';
 
 export const revalidate = 1800;
 
@@ -28,6 +29,9 @@ export default async function EpisodePage({ params }: { params: { slug: string }
   const prev = idx < all.length - 1 ? all[idx + 1] : null;
   const next = idx > 0 ? all[idx - 1] : null;
 
+  const chapters = parseChapters(ep.descriptionHtml);
+  const cleanedDescription = descriptionWithoutChapters(ep.descriptionHtml);
+
   return (
     <article className="max-w-4xl mx-auto px-4 sm:px-6 py-16">
       <Link href="/episodes" className="text-ink-400 text-sm hover:text-accent">← All episodes</Link>
@@ -50,14 +54,6 @@ export default async function EpisodePage({ params }: { params: { slug: string }
             {ep.duration && <span>· {ep.duration}</span>}
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-ink-50 leading-tight">{ep.title}</h1>
-
-          {ep.audioUrl && (
-            <div className="mt-6">
-              <audio controls preload="none" className="w-full" src={ep.audioUrl}>
-                Your browser does not support audio.
-              </audio>
-            </div>
-          )}
 
           <div className="mt-6 flex flex-wrap gap-3">
             <a
@@ -88,10 +84,13 @@ export default async function EpisodePage({ params }: { params: { slug: string }
         </div>
       </div>
 
-      <div
-        className="prose-invert text-ink-200 mt-12 max-w-none"
-        dangerouslySetInnerHTML={{ __html: ep.descriptionHtml }}
-      />
+      <div className="mt-12">
+        <EpisodePlayer
+          audioUrl={ep.audioUrl}
+          chapters={chapters}
+          descriptionHtml={cleanedDescription}
+        />
+      </div>
 
       <div className="mt-16 pt-8 border-t border-ink-700 grid grid-cols-1 sm:grid-cols-2 gap-4">
         {prev ? (

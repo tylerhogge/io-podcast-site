@@ -7,7 +7,7 @@ import { fetchChannel } from '@/lib/rss';
 const SITE_URL = 'https://www.investoroperator.io';
 const TITLE = 'The Investor + Operator (IO) Podcast';
 const DESCRIPTION =
-  'The Investor + Operator (IO) Podcast hosts the most candid, applicable conversations about building companies with the world’s best operators and investors.';
+  'Real conversations with the world’s best operators and investors — the kind founders actually use. Hosted by Tyler Hogge and Sterling Snow.';
 
 export async function generateMetadata(): Promise<Metadata> {
   const channel = await fetchChannel();

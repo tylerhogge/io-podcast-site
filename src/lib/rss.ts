@@ -40,12 +40,68 @@ function slugify(s: string): string {
 }
 
 function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+  // Replace tags with spaces (not empty) so adjacent paragraphs don't merge words.
+  return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+// Produce a clean short blurb for episode cards: drop chapter lists,
+// "--" separators, subscribe boilerplate, and stray timestamps.
+function cleanBlurb(html: string): string {
+  let text = stripHtml(html);
+  const markers = [/chapters\s*:/i, /\s--\s/, /subscribe for more/i, /this podcast was brought/i];
+  let cut = text.length;
+  for (const m of markers) {
+    const match = text.match(m);
+    if (match && match.index !== undefined && match.index < cut) cut = match.index;
+  }
+  text = text.slice(0, cut);
+  // Remove any stray timestamps like (00:01:22) or 12:30
+  text = text.replace(/\(?\d{1,2}:\d{2}(?::\d{2})?\)?/g, '').replace(/\s+/g, ' ').trim();
+  return text.slice(0, 320);
 }
 
 function formatDate(iso: string): string {
   const d = new Date(iso);
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+export type Chapter = { seconds: number; display: string; label: string };
+
+const CHAPTER_LINE = /^\(?(\d{1,2}):(\d{2})(?::(\d{2}))?\)?\s*[-–—]?\s*(.+)$/;
+
+// Extract clickable chapters from an episode's HTML description.
+export function parseChapters(html: string): Chapter[] {
+  const lines = html.replace(/<[^>]+>/g, '\n').split('\n').map((l) => l.trim()).filter(Boolean);
+  const chapters: Chapter[] = [];
+  for (const line of lines) {
+    const m = line.match(CHAPTER_LINE);
+    if (!m) continue;
+    let h = 0, mn = 0, s = 0;
+    if (m[3] !== undefined) { h = +m[1]; mn = +m[2]; s = +m[3]; }
+    else { mn = +m[1]; s = +m[2]; }
+    const label = m[4].trim();
+    if (!label || /^chapters/i.test(label)) continue;
+    const seconds = h * 3600 + mn * 60 + s;
+    const display = h > 0
+      ? `${h}:${String(mn).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+      : `${mn}:${String(s).padStart(2, '0')}`;
+    chapters.push({ seconds, display, label });
+  }
+  return chapters;
+}
+
+// Remove the chapter list + separators from the HTML so the description
+// reads cleanly (chapters are shown as an interactive list instead).
+export function descriptionWithoutChapters(html: string): string {
+  return html
+    .replace(/<p>([\s\S]*?)<\/p>/g, (full, inner: string) => {
+      const t = inner.replace(/<[^>]+>/g, '').trim();
+      if (/^chapters\s*:?\s*$/i.test(t)) return '';
+      if (CHAPTER_LINE.test(t)) return '';
+      if (t === '--' || t === '—') return '';
+      return full;
+    })
+    .trim();
 }
 
 type FeedCache = {
@@ -109,7 +165,7 @@ async function fetchAndParseFeed(): Promise<FeedCache> {
       id,
       slug: slugify(title),
       title,
-      description: stripHtml(descHtmlStr).slice(0, 600),
+      description: cleanBlurb(descHtmlStr),
       descriptionHtml: descHtmlStr,
       pubDate,
       pubDateFormatted: formatDate(pubDate),

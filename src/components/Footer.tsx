@@ -16,7 +16,7 @@ export default function Footer() {
           <div>
             <h3 className="text-accent font-bold text-lg">The Investor + Operator (IO) Podcast</h3>
             <p className="text-ink-300 text-sm mt-3 leading-relaxed">
-              The most candid, applicable conversations about building companies with the world&apos;s best operators and investors.
+              Real conversations with the world&apos;s best operators and investors — the kind founders actually use.
             </p>
           </div>
 
@@ -44,9 +44,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-ink-800 text-xs text-ink-500 flex flex-col sm:flex-row justify-between gap-3">
+        <div className="mt-10 pt-6 border-t border-ink-800 text-xs text-ink-500">
           <p>© {new Date().getFullYear()} The Investor + Operator (IO) Podcast. All rights reserved.</p>
-          <p>Built with Next.js · Deployed on Vercel</p>
         </div>
       </div>
     </footer>
