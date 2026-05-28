@@ -14,7 +14,15 @@ export type YouTubeVideo = {
   thumbnail: string;
   publishedAt: string;
   publishedFormatted: string;
+  views: number;
+  durationSeconds: number;
 };
+
+function isoDurationToSeconds(iso: string): number {
+  const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!m) return 0;
+  return (+(m[1] || 0)) * 3600 + (+(m[2] || 0)) * 60 + (+(m[3] || 0));
+}
 
 function formatDate(iso: string): string {
   if (!iso) return '';
@@ -73,6 +81,8 @@ async function fetchViaDataApi(apiKey: string): Promise<YouTubeVideo[]> {
         thumbnail,
         publishedAt: published,
         publishedFormatted: formatDate(published),
+        views: 0,
+        durationSeconds: 0,
       });
     }
 
@@ -80,7 +90,37 @@ async function fetchViaDataApi(apiKey: string): Promise<YouTubeVideo[]> {
     if (!pageToken) break;
   }
 
+  // Fetch view counts + durations in batches of 50 via videos.list.
+  await attachStatistics(all, apiKey);
+
   return all;
+}
+
+async function attachStatistics(videos: YouTubeVideo[], apiKey: string): Promise<void> {
+  const byId = new Map(videos.map((v) => [v.id, v]));
+  const ids = videos.map((v) => v.id);
+
+  for (let i = 0; i < ids.length; i += 50) {
+    const batch = ids.slice(i, i + 50);
+    const url = new URL('https://www.googleapis.com/youtube/v3/videos');
+    url.searchParams.set('part', 'statistics,contentDetails');
+    url.searchParams.set('id', batch.join(','));
+    url.searchParams.set('key', apiKey);
+
+    const res = await fetch(url.toString(), { next: { revalidate: 3600 } });
+    if (!res.ok) {
+      console.error('YouTube statistics error:', res.status);
+      return;
+    }
+    const data: any = await res.json();
+    for (const item of data.items || []) {
+      const v = byId.get(item.id);
+      if (v) {
+        v.views = Number(item.statistics?.viewCount || 0);
+        v.durationSeconds = isoDurationToSeconds(item.contentDetails?.duration || '');
+      }
+    }
+  }
 }
 
 async function fetchViaRss(): Promise<YouTubeVideo[]> {
@@ -104,6 +144,8 @@ async function fetchViaRss(): Promise<YouTubeVideo[]> {
         thumbnail: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
         publishedAt: published,
         publishedFormatted: formatDate(published),
+        views: 0,
+        durationSeconds: 0,
       };
     });
   } catch {

@@ -1,13 +1,18 @@
 import Link from 'next/link';
 import { fetchEpisodes, fetchChannel } from '@/lib/rss';
+import { fetchRankedEpisodes, sortByPopularity } from '@/lib/popularity';
 import EpisodeCard from '@/components/EpisodeCard';
 import ListenOn from '@/components/ListenOn';
 
 export const revalidate = 1800;
 
 export default async function Home() {
-  const [episodes, channel] = await Promise.all([fetchEpisodes(), fetchChannel()]);
-  const recent = episodes.slice(0, 6);
+  const [episodes, channel, ranked] = await Promise.all([
+    fetchEpisodes(),
+    fetchChannel(),
+    fetchRankedEpisodes(),
+  ]);
+  const popular = sortByPopularity(ranked).slice(0, 12);
   const latest = episodes[0];
   const COVER = channel.image;
 
@@ -112,18 +117,18 @@ export default async function Home() {
         </section>
       )}
 
-      {/* Recent episodes */}
+      {/* Most popular episodes */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex items-end justify-between gap-4 mb-8">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-ink-50">Recent episodes</h2>
-              <p className="text-ink-300 mt-2">Fresh conversations with the operators and investors building the future.</p>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-ink-50">Most popular</h2>
+              <p className="text-ink-300 mt-2">The most-watched conversations with the operators and investors building the future.</p>
             </div>
             <Link href="/episodes" className="text-accent text-sm font-medium hover:underline shrink-0">View all →</Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recent.map((ep) => <EpisodeCard key={ep.id} episode={ep} />)}
+            {popular.map((ep) => <EpisodeCard key={ep.id} episode={ep} />)}
           </div>
         </div>
       </section>
