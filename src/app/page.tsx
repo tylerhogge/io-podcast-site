@@ -33,8 +33,8 @@ export default async function Home() {
                 The Investor + Operator <span className="text-accent">(IO)</span> Podcast
               </h1>
               <p className="mt-6 text-lg text-ink-200 max-w-2xl leading-relaxed">
-                Real conversations with the world&apos;s best operators and investors with practical
-                advice founders actually use. Hosted by Tyler Hogge and Sterling Snow.
+                Real conversations with the world&apos;s best operators and investors. Practical
+                advice founders actually use. Hosted by Tyler Hogge and Sterling Snow. LFG.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-2 sm:gap-3">
                 <Link

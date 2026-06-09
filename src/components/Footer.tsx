@@ -16,7 +16,7 @@ export default function Footer() {
           <div>
             <h3 className="text-accent font-bold text-lg">The Investor + Operator (IO) Podcast</h3>
             <p className="text-ink-300 text-sm mt-3 leading-relaxed">
-              Real conversations with the world&apos;s best operators and investors with practical advice founders actually use.
+              Real conversations with the world&apos;s best operators and investors. Practical advice founders actually use. LFG.
             </p>
           </div>
 

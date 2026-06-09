@@ -27,7 +27,7 @@ export default async function AboutPage() {
         <div className="md:col-span-2 prose-invert text-ink-200">
           <p>
             The Investor + Operator (IO) Podcast brings you real conversations with the world&apos;s
-            best operators and investors with practical advice founders actually use. New episodes drop monthly.
+            best operators and investors. Practical advice founders actually use. New episodes drop monthly.
           </p>
           <p>
             Hosted by Tyler Hogge and Sterling Snow — an investor and an operator pulling tactical
